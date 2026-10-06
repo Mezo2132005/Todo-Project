@@ -1,10 +1,9 @@
 import 'package:hive_ce/hive_ce.dart';
-
-import '../../models/todo.dart';
-
-part 'hive_adapters.g.dart';
+import 'package:todo_project/models/task_model.dart';
+import 'package:todo_project/models/user_data.dart';
 
 @GenerateAdapters([
-  AdapterSpec<Todo>(),
+  AdapterSpec<TaskModel>(),
+  AdapterSpec<UserData>(),
 ])
-class HiveAdapters {}
+part 'hive_adapters.g.dart';

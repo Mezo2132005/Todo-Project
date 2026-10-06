@@ -3,8 +3,16 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_ce/hive_ce.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todo_project/core/styles/text_styles.dart';
+import 'package:todo_project/core/utls/app_constants.dart';
+import 'package:todo_project/core/utls/colors_const.dart';
+import 'package:todo_project/core/widgets/circle_avatar.dart';
+import 'package:todo_project/features/home/home_screen.dart';
+import 'package:todo_project/core/widgets/custom_save_button.dart';
 import 'package:todo_project/gen/locale_keys.g.dart';
+import 'package:todo_project/models/user_data.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -17,6 +25,12 @@ class _LoginState extends State<Login> {
   final ImagePicker picker = ImagePicker();
 
   XFile? photo;
+  final TextEditingController userController = TextEditingController();
+
+  void saveData(XFile? selectedImage, String? user){
+    Hive.box<UserData>(AppConstants.userBox).put(AppConstants.userBox, UserData(img: selectedImage?.path, user: user));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen(),));
+  }
 
   Future<void> pickImage(ImageSource source) async {
     final XFile? selectedImage = await picker.pickImage(
@@ -103,17 +117,7 @@ class _LoginState extends State<Login> {
                       );
                     },
 
-                    child: CircleAvatar(
-                      radius: 45.r,
-
-                      backgroundImage: photo != null
-                          ? FileImage(
-                              File(photo!.path),
-                            )
-                          : const AssetImage(
-                              "assets/images/user.png",
-                            ) as ImageProvider,
-                    ),
+                    child: CircleAvatr(photo: photo?.path)
                   ),
                 ),
 
@@ -162,59 +166,14 @@ class _LoginState extends State<Login> {
                     horizontal: 20.w,
                   ),
                   child: TextFormField(
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white,
-
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.r),
-                        borderSide: BorderSide.none,
-                      ),
-
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.r),
-                        borderSide: BorderSide.none,
-                      ),
-
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.r),
-                        borderSide: BorderSide.none,
-                      ),
-                    ),
+                    controller: userController,
+                    decoration: TextStyles.style
                   ),
                 ),
 
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 20.w,
-                    vertical: 20.h,
-                  ),
-                  child: Container(
-                    width: double.infinity,
-                    height: 50.h,
-
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(
-                        255,
-                        118,
-                        157,
-                        234,
-                      ),
-
-                      borderRadius: BorderRadius.circular(25.r),
-                    ),
-
-                    child: Center(
-                      child: Text(
-                        LocaleKeys.Continue.tr(),
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                GestureDetector(
+                  child: CustomSaveButton(txt: LocaleKeys.Continue.tr(),),
+                  onTap: () => saveData(photo, userController.text),),
               ],
             ),
 
@@ -237,12 +196,7 @@ class _LoginState extends State<Login> {
                 icon: Icon(
                   Icons.language,
                   size: 40.sp,
-                  color: const Color.fromARGB(
-                    255,
-                    118,
-                    157,
-                    234,
-                  ),
+                  color: ColorsConst.blue100,
                 ),
               ),
             ),

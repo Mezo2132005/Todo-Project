@@ -7,12 +7,14 @@ import 'package:todo_project/core/hive/hive_adapters.dart';
 
 extension HiveRegistrar on HiveInterface {
   void registerAdapters() {
-    registerAdapter(TodoAdapter());
+    registerAdapter(TaskModelAdapter());
+    registerAdapter(UserDataAdapter());
   }
 }
 
 extension IsolatedHiveRegistrar on IsolatedHiveInterface {
   void registerAdapters() {
-    registerAdapter(TodoAdapter());
+    registerAdapter(TaskModelAdapter());
+    registerAdapter(UserDataAdapter());
   }
 }

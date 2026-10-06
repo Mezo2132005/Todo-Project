@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_ce_flutter/adapters.dart';
 import 'package:lottie/lottie.dart';
+import 'package:todo_project/core/utls/app_constants.dart';
+import 'package:todo_project/features/home/home_screen.dart';
 import 'package:todo_project/features/login/login.dart';
+import 'package:todo_project/models/user_data.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -16,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Hive.box<UserData>(AppConstants.userBox).isEmpty?Login() :HomeScreen()));
     }
     );
   }
