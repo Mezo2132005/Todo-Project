@@ -8,3 +8,4 @@ A new Flutter project.
 <img width="319" height="663" alt="Cam" src="https://github.com/user-attachments/assets/31188fd1-a793-4592-821b-ad355dc88606" />
 <img width="319" height="663" alt="Add Task" src="https://github.com/user-attachments/assets/d55b7a52-2e58-4b79-9a99-6fa08ff16859" />
 <img width="319" height="663" alt="Task" src="https://github.com/user-attachments/assets/a32cc126-2960-4179-8e38-9a0e77f92d91" />
+<img width="367" height="555" alt="Counter" src="https://github.com/user-attachments/assets/b9763668-10f4-42eb-88a6-cd08f1c0731d" />
